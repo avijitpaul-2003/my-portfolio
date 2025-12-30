@@ -219,8 +219,46 @@ nav {
     50% { opacity: 0; }
 }
 
+/* --- HERO IMAGE SLIDER & ANIMATION --- */
 .hero-img {
     position: relative;
+    width: 400px;       /* ইমেজের সাইজ ফিক্সড রাখা হলো */
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.img-slider img {
+    position: absolute;  /* একটার ওপর আরেকটা ছবি বসানোর জন্য */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;  /* গোল করার জন্য */
+    
+    /* বর্ডার এবং গ্লো ইফেক্ট */
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 50px rgba(112, 0, 255, 0.3);
+    
+    /* এনিমেশন ট্রানজিশন */
+    opacity: 0;          /* শুরুতে সব ছবি অদৃশ্য থাকবে */
+    transform: scale(0.8) rotate(-10deg); /* শুরুতে একটু ছোট ও বাঁকা থাকবে */
+    transition: all 1s ease-in-out;       /* ১ সেকেন্ড ধরে এনিমেশন হবে */
+}
+
+/* যখন ছবি একটিভ হবে তখন কেমন দেখাবে */
+.img-slider img.active {
+    opacity: 1;          /* দৃশ্যমান হবে */
+    transform: scale(1) rotate(0deg);     /* স্বাভাবিক সাইজ ও সোজা হবে */
+    z-index: 2;
 }
 
 .hero-img img {
@@ -628,5 +666,214 @@ footer {
     .section-title {
         font-size: 2rem;
         margin-bottom: 30px;
+    }
+}
+/* --- GO TO TOP BUTTON --- */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 100px; /* WhatsApp বাটন থেকে উপরে রাখার জন্য */
+    right: 35px;   /* WhatsApp বাটনের সাথে এলাইনমেন্ট ঠিক রাখার জন্য */
+    width: 50px;
+    height: 50px;
+    background: var(--secondary); /* তোমার থিমের পার্পল কালার */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    box-shadow: 0 0 15px rgba(112, 0, 255, 0.4);
+    z-index: 999;
+    text-decoration: none;
+    opacity: 0; /* শুরুতে লুকানো থাকবে */
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.scroll-top-btn:hover {
+    background: var(--primary); /* হোভার করলে সায়ান কালার হবে */
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+}
+
+/* যখন জাভাস্ক্রিপ্ট দিয়ে 'show' ক্লাস এড করা হবে */
+.scroll-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+}
+@media (max-width: 768px) {
+    .scroll-top-btn {
+        bottom: 90px; /* মোবাইলে একটু নিচে নামানো হলো */
+        right: 25px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
+/* Theme Toggle Button */
+.theme-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+/* Light Theme */
+body.light {
+    --bg-color: #f5f5f5;
+    --card-bg: rgba(0,0,0,0.05);
+    --text-main: #000;
+    --text-muted: #555;
+}
+/* ===== THEME TOGGLE ===== */
+.theme-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+/* Light Theme */
+body.light {
+    --bg-color: #f5f5f5;
+    --card-bg: rgba(0,0,0,0.05);
+    --text-main: #000;
+    --text-muted: #555;
+}
+
+/* ===== WHATSAPP POPUP ===== */
+.wa-popup {
+    position: fixed;
+    bottom: 110px;
+    right: 30px;
+    background: var(--card-bg);
+    padding: 15px 20px;
+    border-radius: 15px;
+    border: var(--glass-border);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    z-index: 999;
+    animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* --- MOBILE MENU STYLES --- */
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.desktop-btn {
+    display: inline-block;
+}
+
+.mobile-btn {
+    display: none;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* --- MOBILE RESPONSIVE QUERY --- */
+@media (max-width: 768px) {
+    
+    /* 1. Hamburger Menu Show */
+    .hamburger {
+        display: block;
+        z-index: 1001; /* মেনুর উপরে থাকার জন্য */
+    }
+
+    .desktop-btn {
+        display: none; /* মোবাইলে হেডার থেকে বাটন লুকানো */
+    }
+
+    /* 2. Nav Links (Mobile Drawer) */
+    .nav-links {
+        display: flex; /* Flex রাখতে হবে */
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%; /* শুরুতে স্ক্রিনের বাইরে থাকবে */
+        width: 70%;
+        height: 100vh;
+        background: rgba(10, 10, 10, 0.95); /* গাঢ় ব্যাকগ্রাউন্ড */
+        backdrop-filter: blur(10px);
+        align-items: center;
+        justify-content: center;
+        transition: 0.4s ease-in-out;
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    }
+
+    /* ক্লাস যোগ হলে মেনু বের হবে */
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links li {
+        margin: 20px 0;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+    }
+
+    .mobile-btn {
+        display: inline-block; /* মেনুর ভেতর বাটন দেখাবে */
+    }
+
+    /* 3. Hero Section Fixes */
+    .hero {
+        flex-direction: column-reverse;
+        padding-top: 100px; /* উপরে জায়গা কমানো */
+        height: auto;
+        padding-bottom: 50px;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-img {
+        width: 280px; 
+        height: 280px;
+        margin-bottom: 30px;
+    }
+    
+    .hero-img img {
+        width: 100%; 
+        height: 100%;
+    }
+
+    /* 4. General Padding Fixes */
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .glass-card, .project-card {
+        padding: 20px; /* মোবাইলে প্যাডিং কমানো */
+    }
+
+    /* 5. Floating Button Adjustment */
+    .float-wa {
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .scroll-top-btn {
+        bottom: 80px;
+        right: 20px;
     }
 }
