@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "name": "Avijit Paul",
+  "url": "https://avijitpaul-2003.github.io/my-portfolio/",
+  "jobTitle": "Google Apps Script Developer & Graphic Designer",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "The Shotota Electronics"
+  },
+  "sameAs": [
+    "https://www.facebook.com/avijitpaul2003",
+    "https://www.linkedin.com/in/avijit-paul2003/",
+    "https://github.com/avijitpaul-2003"
+  ]
+}
+</script>
+
     <meta name="description" content="Portfolio of Avijit Paul - Computer Science Student & Google Apps Script Developer.">
 <meta name="keywords" content="Avijit Paul, Web Developer, Google Apps Script, Graphic Design, Portfolio">
 <meta name="author" content="Avijit Paul">
@@ -31,17 +50,24 @@
 
     <div id="particles-js"></div>
 
-    <nav>
-        <div class="logo">Avijit<span class="highlight"> Paul</span></div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Work</a></li>
-        </ul>
-        <a href="#contact" class="btn">Let's Talk</a>
-    </nav>
+<nav>
+    <div class="logo">Avijit<span class="highlight"> Paul</span></div>
+    
+    <div class="hamburger">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Work</a></li>
+        <a href="#contact" class="btn mobile-btn">Let's Talk</a>
+    </ul>
+    
+    <a href="#contact" class="btn desktop-btn">Let's Talk</a>
+</nav>
 
     <header id="home" class="container hero">
         <div class="hero-text" data-aos="fade-right" data-aos-duration="1000">
@@ -54,8 +80,14 @@
                 <a href="cv.pdf" class="btn">Download CV <i class="fas fa-download"></i></a>
             </div>
         </div>
-        <div class="hero-img" data-aos="fade-left" data-aos-duration="1000">
-            <img src="profile.png" alt="Avijit Paul">
+<div class="hero-img" data-aos="fade-left" data-aos-duration="1000">
+            <div class="img-slider">
+                <img src="profile.png" class="active" alt="Avijit Paul">
+                
+                <img src="profile2.png" alt="Avijit Paul Mode 2">
+                
+                <img src="profile3.png" alt="Avijit Paul Mode 3">
+            </div>
         </div>
     </header>
 
@@ -192,6 +224,8 @@
         </div>
     </section>
 
+    
+
     <section id="skills" class="container">
         <h2 class="section-title" data-aos="fade-up">Technical <span>Skills</span></h2>
         <div class="skills-grid">
@@ -254,21 +288,6 @@
         </div>
     </section>
 
-    <section id="reviews" class="container">
-        <h2 class="section-title" data-aos="fade-up">Client <span>Feedback</span></h2>
-        <div class="projects-grid">
-            <div class="glass-card" data-aos="fade-right">
-                <i class="fas fa-quote-left highlight" style="font-size: 20px;"></i>
-                <p style="margin: 15px 0; font-style: italic; color: #ccc;">"Avijit's designs gave our electronics brand a premium look. He is also very quick with data entry solutions."</p>
-                <h4 style="color: var(--primary);">- The Shotota Electronics</h4>
-            </div>
-            <div class="glass-card" data-aos="fade-left">
-                <i class="fas fa-quote-left highlight" style="font-size: 20px;"></i>
-                <p style="margin: 15px 0; font-style: italic; color: #ccc;">"The event posters for Pushpanjali Jubo Sangha were amazing. Everyone loved the creativity!"</p>
-                <h4 style="color: var(--primary);">- Event Coordinator</h4>
-            </div>
-        </div>
-    </section>
 
     <section id="contact" class="container">
         <h2 class="section-title" data-aos="fade-up">Get In <span>Touch</span></h2>
@@ -364,6 +383,35 @@
             });
         };
 
+        // --- Mobile Menu Toggle ---
+const hamburger = document.querySelector(".hamburger");
+const navLinks = document.querySelector(".nav-links");
+const links = document.querySelectorAll(".nav-links li");
+
+hamburger.addEventListener("click", () => {
+    // মেনু টগল করা
+    navLinks.classList.toggle("active");
+    
+    // আইকন চেঞ্জ করা (Bars <-> Times)
+    const icon = hamburger.querySelector("i");
+    if (navLinks.classList.contains("active")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-times");
+    } else {
+        icon.classList.remove("fa-times");
+        icon.classList.add("fa-bars");
+    }
+});
+
+// মেনুর লিংকে ক্লিক করলে মেনু বন্ধ হয়ে যাবে
+links.forEach(link => {
+    link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        hamburger.querySelector("i").classList.remove("fa-times");
+        hamburger.querySelector("i").classList.add("fa-bars");
+    });
+});
+
         // 5. Particles.js Config
         particlesJS("particles-js", {
             "particles": {
@@ -389,6 +437,46 @@
             },
             "retina_detect": true
         });
+
+// 6. Go to Top Button Logic
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.addEventListener("scroll", function() {
+        // যদি ৩০০ পিক্সেলের বেশি নিচে নামা হয়, বাটন দেখাবে
+        if (window.scrollY > 300) {
+            scrollTopBtn.classList.add("show");
+        } else {
+            scrollTopBtn.classList.remove("show");
+        }
+    });
+
+    scrollTopBtn.addEventListener("click", function(e) {
+        e.preventDefault(); // ডিফল্ট জাম্প বন্ধ করে স্মুথলি উপরে যাবে
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+// 7. Hero Image Slider with Animation
+    const heroImages = document.querySelectorAll(".img-slider img");
+    let currentImgIndex = 0;
+
+    function changeHeroImage() {
+        // বর্তমান ছবি থেকে active ক্লাস সরিয়ে ফেলা (অদৃশ্য করা)
+        heroImages[currentImgIndex].classList.remove("active");
+
+        // পরের ইমেজে যাওয়া (শেষ ইমেজে গেলে আবার শুরুতে ফিরে আসবে)
+        currentImgIndex = (currentImgIndex + 1) % heroImages.length;
+
+        // নতুন ইমেজে active ক্লাস যুক্ত করা (দৃশ্যমান করা)
+        heroImages[currentImgIndex].classList.add("active");
+    }
+
+    // প্রতি ৩.৫ সেকেন্ড পর পর ছবি চেঞ্জ হবে
+    setInterval(changeHeroImage, 3500);
     </script>
+    <a href="#" class="scroll-top-btn" id="scrollTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
 </body>
 </html>
