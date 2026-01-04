@@ -1087,3 +1087,73 @@ body.light {
     from { opacity: 0; transform: scale(0.9); }
     to { opacity: 1; transform: scale(1); }
 }
+
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--primary);
+    border-radius: 50%;
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 10px var(--primary);
+    z-index: 9999;
+    transition: transform 0.1s;
+}
+
+/* --- CUSTOM MAGIC CURSOR CSS --- */
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    transition: width 0.2s, height 0.2s; /* Smooth sizing if needed */
+}
+
+/* যখন লিংকের ওপর মাউস যাবে তখন কার্সার বড় হবে (অপশনাল) */
+a:hover ~ .cursor-outline,
+button:hover ~ .cursor-outline,
+.glass-card:hover ~ .cursor-outline {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 229, 255, 0.1);
+}
+
+/* --- 1. SCROLL PROGRESS BAR (NEON STYLE) --- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    z-index: 99999;
+    box-shadow: 0 0 10px var(--primary);
+    transition: width 0.1s;
+}
+
+/* --- 2. MAGNETIC BUTTON TRANSITION --- */
+/* সব বাটনে স্মুথ ভাব আনার জন্য */
+.btn {
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s;
+}
