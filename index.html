@@ -44,6 +44,8 @@
 </head>
 <body>
 
+<div class="scroll-progress"></div>
+
     <div id="preloader">
         <div class="loader"></div>
     </div>
@@ -105,22 +107,22 @@
     </div>
 </div>
 
-    <section class="container" style="padding-top: 0;">
+<section class="container" style="padding-top: 0;">
         <div class="about-grid" style="text-align: center; grid-template-columns: repeat(3, 1fr);">
             <div class="glass-card" data-aos="zoom-in">
-                <h2 class="highlight">2+</h2>
+                <h2 class="highlight" data-val="2">2+</h2>
                 <p>Years Experience</p>
             </div>
             <div class="glass-card" data-aos="zoom-in" data-aos-delay="100">
-                <h2 class="highlight">20+</h2>
+                <h2 class="highlight" data-val="20">20+</h2>
                 <p>Projects Done</p>
             </div>
             <div class="glass-card" data-aos="zoom-in" data-aos-delay="200">
-                <h2 class="highlight">100%</h2>
+                <h2 class="highlight" data-val="100">100%</h2>
                 <p>Client Satisfaction</p>
             </div>
         </div>
-    </section>
+        </section>
 
     <section id="about" class="container">
         <h2 class="section-title" data-aos="fade-up">About <span>Me</span></h2>
@@ -378,12 +380,17 @@
 
     <section id="contact" class="container">
         <h2 class="section-title" data-aos="fade-up">Get In <span>Touch</span></h2>
-<form action="https://formspree.io/f/xwvknbak" method="POST" class="contact-form" data-aos="zoom-in">
+<form name="submit-to-google-sheet" class="contact-form" data-aos="zoom-in">
     <input type="text" name="name" placeholder="Your Name" required>
     <input type="email" name="email" placeholder="Your Email" required>
     <textarea name="message" rows="5" placeholder="Write your message..." required></textarea>
-    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+    
+    <button type="submit" class="btn" style="width: 100%;">
+        <span id="btnText">Send Message</span>
+        <i id="btnLoading" class="fas fa-spinner fa-spin" style="display: none;"></i>
+    </button>
 </form>
+<span id="msg" style="display: block; text-align: center; margin-top: 10px; color: #00e5ff;"></span>
     </section>
 
     <footer>
@@ -593,5 +600,53 @@ links.forEach(link => {
         });
     });
 </script>
-</body>
+<script>
+    // আপনার নতুন আপডেট করা লিংক (যেটাতে ইমেইল নোটিফিকেশন অন করা আছে)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyPF5l9-eox8rVdm4_lLUchqYJsxeQhOo0Kf48Ix0iYZS1qcI0o1si381gSp9OsAY0S/exec';
+    
+    const form = document.forms['submit-to-google-sheet'];
+    const msg = document.getElementById("msg");
+    const btnText = document.getElementById("btnText");
+    const btnLoading = document.getElementById("btnLoading");
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      
+      // লোডিং আইকন চালু করা
+      btnText.style.display = "none";
+      btnLoading.style.display = "inline-block";
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            msg.innerHTML = "Message sent successfully! I will contact you soon.";
+            msg.style.color = "#00e5ff"; // সাকসেস কালার
+            form.reset();
+            
+            // লোডিং বন্ধ করা
+            btnText.style.display = "inline-block";
+            btnLoading.style.display = "none";
+
+            // ৫ সেকেন্ড পর মেসেজ গায়েব হয়ে যাবে
+            setTimeout(function(){
+                msg.innerHTML = "";
+            }, 5000);
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            msg.innerHTML = "Error! Please check internet connection.";
+            msg.style.color = "red"; // এরর কালার
+            
+            // লোডিং বন্ধ করা
+            btnText.style.display = "inline-block";
+            btnLoading.style.display = "none";
+        });
+    });
+</script>
+
+<div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <script src="script.js"></script>
+
+    </body>
 </html>
